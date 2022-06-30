@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "5b69HC9tM2tICC7emEHMJtzmWmu8uAyR5vWRVQJBWFY=",
+  "Source": "catalogo-api",
+  "BasePath": "_content/catalogo-api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
