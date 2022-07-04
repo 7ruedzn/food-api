@@ -30,6 +30,14 @@ namespace catalogo_api.Controllers
             return categorias is null ? NotFound() : categorias;
         }
 
+        [HttpGet("produtos")]
+        public ActionResult<IEnumerable<Categoria>> GetProdutosPorCategoria(int id)
+        {
+            var categorias = _catalogoContext.Categorias?.Include(c => c.Produtos).ToList();
+
+            return categorias is null ? NotFound() : categorias;
+        }
+
         [HttpPost]
         public ActionResult<Categoria> Post(Categoria categoria)
         {
@@ -63,7 +71,6 @@ namespace catalogo_api.Controllers
             _catalogoContext.SaveChanges();
 
             return Ok(categoria);
-
         }
     }
 }

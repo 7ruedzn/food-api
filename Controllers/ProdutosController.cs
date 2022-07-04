@@ -45,13 +45,6 @@ namespace catalogo_api.Controllers
         public ActionResult Put(int id, Produto produto)
         {
             if(produto is null || id != produto.ProdutoId) return BadRequest();
-
-            // var produtoProcurado = _catalogoContext.Produtos?.Find(produto.ProdutoId);
-
-            // if(produtoProcurado is null) return NotFound();
-
-            // _catalogoContext.Update(produto);
-            // _catalogoContext.Attach(produto);
             _catalogoContext.Entry(produto).State = EntityState.Modified;
             _catalogoContext.SaveChanges();
 
@@ -61,11 +54,7 @@ namespace catalogo_api.Controllers
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
         {
-            //Pesquisa diretamente no banco;
             var produto = _catalogoContext.Produtos?.FirstOrDefault(p => p.ProdutoId == id);
-            
-            //Pesquisa primeiro na memória, oq pode gerar erros em alguns momentos;
-            // var produto = _catalogoContext.Produtos?.Find(id);
 
             if(produto is null) return NotFound();
 
