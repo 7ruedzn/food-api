@@ -19,21 +19,21 @@ namespace catalogo_api.Controllers
         [HttpGet("{id:int}", Name = "ObterCategoria")]
         public ActionResult<Categoria> Get(int id)
         {
-            var categoria = _catalogoContext.Categorias?.Find(id);
+            var categoria = _catalogoContext.Categorias?.AsNoTracking().FirstOrDefault(p => p.CategoriaId == id);
             return categoria is null ? NotFound() : categoria;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
-            var categorias = _catalogoContext.Categorias?.ToList();
+            var categorias = _catalogoContext.Categorias?.AsNoTracking().ToList();
             return categorias is null ? NotFound() : categorias;
         }
 
         [HttpGet("produtos")]
         public ActionResult<IEnumerable<Categoria>> GetProdutosPorCategoria(int id)
         {
-            var categorias = _catalogoContext.Categorias?.Include(c => c.Produtos).ToList();
+            var categorias = _catalogoContext.Categorias?.Include(c => c.Produtos).AsNoTracking().ToList();
 
             return categorias is null ? NotFound() : categorias;
         }
@@ -61,7 +61,7 @@ namespace catalogo_api.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             var categoria = _catalogoContext.Categorias?.FirstOrDefault(c => c.CategoriaId == id);
 

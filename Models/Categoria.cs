@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using catalogo_api.Validations;
 
 namespace catalogo_api.Models
 {
@@ -18,6 +19,7 @@ namespace catalogo_api.Models
 
         [Required]
         [StringLength(300)]
+        [ImageAttribute]
         public string? ImagemURL { get; set; }
         public Collection<Produto>? Produtos { get; set; }
     }

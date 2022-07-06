@@ -16,21 +16,21 @@ namespace catalogo_api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Produto>> Get()
+        public async Task<ActionResult<IEnumerable<Produto>>> GetAsync()
         {
-            var produtos = _catalogoContext.Produtos?.ToList();
+            var produtos = await _catalogoContext.Produtos?.AsNoTracking().ToListAsync();
             return produtos is null ? NotFound() : produtos;
         }
 
         [HttpGet("{id:int}", Name="ObterProduto")]
-        public ActionResult<Produto> Get(int id)
+        public async Task<ActionResult<Produto>> Get(int id)
         {
-            var produto = _catalogoContext.Produtos?.Find(id);
+            var produto = await _catalogoContext.Produtos?.AsNoTracking().FirstOrDefaultAsync(p => p.ProdutoId == id);
             return produto is null ? NotFound() : produto;
         }
 
         [HttpPost]
-        public ActionResult Post(Produto produto)
+        public IActionResult Post(Produto produto)
         {   
             if(produto is null) return BadRequest();
 
@@ -42,7 +42,7 @@ namespace catalogo_api.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult Put(int id, Produto produto)
+        public IActionResult Put(int id, Produto produto)
         {
             if(produto is null || id != produto.ProdutoId) return BadRequest();
             _catalogoContext.Entry(produto).State = EntityState.Modified;
@@ -52,7 +52,7 @@ namespace catalogo_api.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             var produto = _catalogoContext.Produtos?.FirstOrDefault(p => p.ProdutoId == id);
 
